@@ -15,6 +15,8 @@ namespace FMSharpConsole
             Console.WriteLine("Found {0} devices", devices.Count);
             Console.WriteLine(string.Join(",", devices.Select(x => x.ToString())));
 
+            var t = new RtlSdr(0);
+
             Console.ReadLine();
         }
     }
