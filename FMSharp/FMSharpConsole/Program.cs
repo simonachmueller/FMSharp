@@ -18,7 +18,8 @@ namespace FMSharpConsole
             IRtlSdrDriver rtlDevice = new RtlSdrDriver();
             rtlDevice.OpenDevice();
             rtlDevice.SetFrequency(100000000);
-            rtlDevice.ReadSamples();
+            var samples = rtlDevice.ReadSamplesSync(256);
+            Console.WriteLine("Samples: {0}", string.Join(",", samples.Select(x => x.ToString())));
             rtlDevice.CloseDevice();
 
             Console.WriteLine("Press any key to close the window");

@@ -6,6 +6,6 @@
         void CloseDevice();
         void SetFrequency(uint frequencyInHz);
         void SetSampleRate(uint sampleRate);
-        void ReadSamples();
+        byte[] ReadSamplesSync(int sampleCount);
     }
 }

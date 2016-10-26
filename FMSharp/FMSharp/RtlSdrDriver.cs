@@ -49,9 +49,13 @@ namespace FMSharp
                 throw new Exception("Unable to set samplerate");
         }
 
-        public unsafe void ReadSamples()
+        public byte[] ReadSamplesSync(int sampleCount)
         {
-            int bufferSize = 256;
+            return ReadSamplesSyncInternal(sampleCount);
+        }
+
+        private unsafe byte[] ReadSamplesSyncInternal(int bufferSize)
+        {
             byte[] buffer = new byte[bufferSize];
             fixed (byte* p = buffer)
             {
@@ -61,7 +65,7 @@ namespace FMSharp
                 if (nRead != bufferSize)
                     throw new Exception("rtlsdr_read_sync");
             }
-            
+            return buffer;
         }
 
         public static IReadOnlyCollection<SDRDeviceDescription> GetConnectedDevices()
