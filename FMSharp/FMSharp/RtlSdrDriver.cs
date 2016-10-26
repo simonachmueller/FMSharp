@@ -25,6 +25,8 @@ namespace FMSharp
                 throw new Exception("Unable to set default frequency");
             if (RtlSdrWrapper.rtlsdr_set_sample_rate(device, DefaultSamplerate) != 0)
                 throw new Exception("Unable to set default samplerate");
+            if (RtlSdrWrapper.rtlsdr_set_tuner_gain_mode(device, 0) != 0)
+                throw new Exception("Unable to set auto gain mode");
         }
 
         public void CloseDevice()
