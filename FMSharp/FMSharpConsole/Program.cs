@@ -11,12 +11,16 @@ namespace FMSharpConsole
     {
         static void Main(string[] args)
         {
-            var devices = RtlSdr.GetConnectedDevices();
+            var devices = RtlSdrDriver.GetConnectedDevices();
             Console.WriteLine("Found {0} devices", devices.Count);
             Console.WriteLine(string.Join(",", devices.Select(x => x.ToString())));
 
-            var t = new RtlSdr(0);
+            var rtlDevice = new RtlSdrDriver();
+            rtlDevice.OpenDevice();
+            rtlDevice.SetFrequency(100000000);
+            rtlDevice.CloseDevice();
 
+            Console.WriteLine("Press any key to close the window");
             Console.ReadLine();
         }
     }

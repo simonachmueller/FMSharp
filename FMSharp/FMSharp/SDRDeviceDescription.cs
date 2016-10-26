@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace FMSharp
 {
-    public class SDRDevice
+    public class SDRDeviceDescription
     {
         public string DeviceName { get; private set; }
         public uint DeviceIndex { get; private set; }
         public string DeviceUSBStrings { get; private set; }
-        public SDRDevice(string deviceName, uint deviceIndex, string deviceUSBStrings)
+        public SDRDeviceDescription(string deviceName, uint deviceIndex, string deviceUSBStrings)
         {
             DeviceName = deviceName;
             DeviceIndex = deviceIndex;
