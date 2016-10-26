@@ -27,6 +27,8 @@ namespace FMSharp
                 throw new Exception("Unable to set default samplerate");
             if (RtlSdrWrapper.rtlsdr_set_tuner_gain_mode(device, 0) != 0)
                 throw new Exception("Unable to set auto gain mode");
+            if (RtlSdrWrapper.rtlsdr_reset_buffer(device) != 0)
+                throw new Exception("Unable to reset buffer");
         }
 
         public void CloseDevice()
@@ -40,10 +42,26 @@ namespace FMSharp
             if (RtlSdrWrapper.rtlsdr_set_center_freq(device, frequencyInHz) != 0)
                 throw new Exception("Unable to set frequency");
         }
+
         public void SetSampleRate(uint sampleRate)
         {
             if (RtlSdrWrapper.rtlsdr_set_sample_rate(device, sampleRate) != 0)
                 throw new Exception("Unable to set samplerate");
+        }
+
+        public unsafe void ReadSamples()
+        {
+            int bufferSize = 256;
+            byte[] buffer = new byte[bufferSize];
+            fixed (byte* p = buffer)
+            {
+                IntPtr ptr = (IntPtr)p;
+                int nRead = 0;
+                RtlSdrWrapper.rtlsdr_read_sync(device, ptr, bufferSize, out nRead);
+                if (nRead != bufferSize)
+                    throw new Exception("rtlsdr_read_sync");
+            }
+            
         }
 
         public static IReadOnlyCollection<SDRDeviceDescription> GetConnectedDevices()
