@@ -38,6 +38,11 @@ namespace FMSharp
             if (RtlSdrWrapper.rtlsdr_set_center_freq(device, frequencyInHz) != 0)
                 throw new Exception("Unable to set frequency");
         }
+        public void SetSampleRate(uint sampleRate)
+        {
+            if (RtlSdrWrapper.rtlsdr_set_sample_rate(device, sampleRate) != 0)
+                throw new Exception("Unable to set samplerate");
+        }
 
         public static IReadOnlyCollection<SDRDeviceDescription> GetConnectedDevices()
         {
